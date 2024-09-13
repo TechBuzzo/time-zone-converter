@@ -37,7 +37,7 @@ convertTimeZone({
 ## Características
 
 - **Manejo de Promesas**: Facilita la integración asincrónica y el manejo de errores.
-- **Flexibilidad en Zonas Horarias**: Soporta todas las zonas horarias IANA para una conversión precisa.
+- **Flexibilidad en Zonas Horarias**: Soporta todas las zonas horarias [IANA](https://www.iana.org/time-zones) para una conversión precisa.
 - **Simplicidad de Uso**: Diseñada para ser usada con un mínimo de configuración y máxima eficiencia.
 
 ## Contribuir
