@@ -1,0 +1,26 @@
+{
+  "name": "@techbuzzo/time-zone-converter",
+  "version": "1.0.0",
+  "description": "`time-zone-converter` es una librería de Node.js que permite convertir horas específicas entre zonas horarias. Diseñada para ser usada de forma directa mediante una función que acepta un objeto de configuración y devuelve promesas.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "TechBuzzo <soporte@techbuzzo.com>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TechBuzzo/time-zone-converter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TechBuzzo/time-zone-converter/issues"
+  },
+  "homepage": "https://github.com/TechBuzzo/time-zone-converter#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "date-fns-tz": "^3.1.3"
+  }
+}
