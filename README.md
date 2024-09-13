@@ -32,7 +32,6 @@ convertTimeZone({
 - **timeZone** (Requerido): La zona horaria de origen de la hora. Debe ser una cadena que represente una zona horaria válida del estándar IANA.
 - **time** (Requerido): La hora en formato "HH:mm" que se desea convertir.
 - **baseDate** (Opcional): La fecha base sobre la cual se realizará la conversión. Si no se proporciona, se usa la fecha actual.
-- **targetTimeZone** (Opcional): La zona horaria de destino para la conversión. Si no se proporciona, se usa la zona horaria del servidor.
 
 ## Características
 
