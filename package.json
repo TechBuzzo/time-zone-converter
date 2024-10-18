@@ -1,6 +1,6 @@
 {
   "name": "@techbuzzo/time-zone-converter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "`time-zone-converter` es una librería de Node.js que permite convertir horas específicas entre zonas horarias. Diseñada para ser usada de forma directa mediante una función que acepta un objeto de configuración y devuelve promesas.",
   "main": "src/index.js",
   "scripts": {

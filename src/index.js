@@ -6,42 +6,64 @@ const { formatInTimeZone } = require('date-fns-tz');
  * @param {string} config.timeZone - Zona horaria de origen en formato IANA.
  * @param {string} config.time - Hora en formato "HH:mm".
  * @param {Date} [config.baseDate=new Date()] - Fecha base para la conversión.
- * @returns {Promise<string>} - Promesa que resuelve la hora convertida en formato ISO o rechaza con un error.
+ * @returns {string} - La hora convertida en formato ISO.
  */
-const convertTimeZone = ({ timeZone, time, baseDate = new Date() }) => {
-  return new Promise((resolve, reject) => {
-    // Validar o convertir baseDate a un objeto Date si es necesario
-    if (!(baseDate instanceof Date) || isNaN(baseDate.valueOf())) {
-      if (typeof baseDate === 'string' || typeof baseDate === 'number') {
-        baseDate = new Date(baseDate);
-        // Verificar si la conversión fue exitosa
-        if (isNaN(baseDate.valueOf())) {
-          reject(new Error("baseDate is invalid and couldn't be converted to a Date object."));
-          return;
-        }
-      } else {
-        reject(new Error("baseDate must be a Date object or a valid date string/number."));
-        return;
+const convertTimeAtZone = ({ timeZone, time, baseDate = new Date() }) => {
+  // Validar o convertir baseDate a un objeto Date si es necesario
+  if (!(baseDate instanceof Date) || isNaN(baseDate.valueOf())) {
+    if (typeof baseDate === 'string' || typeof baseDate === 'number') {
+      baseDate = new Date(baseDate);
+      if (isNaN(baseDate.valueOf())) {
+        throw new Error("baseDate is invalid and couldn't be converted to a Date object.");
       }
+    } else {
+      throw new Error("baseDate must be a Date object or a valid date string/number.");
     }
+  }
 
-    // Asumir que baseDate es ahora válido y proceder
-    const [hours, minutes] = time.split(':');
-    baseDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+  // Asumir que baseDate es ahora válido y proceder
+  const [hours, minutes] = time.split(':');
+  baseDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
 
-    // Intentar formatear la fecha en la zona horaria del servidor en formato ISO
-    try {
-      const formattedDate = formatInTimeZone(
-        baseDate,
-        timeZone,
-        "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-        { timeZone: 'UTC' }
-      );
-      resolve(formattedDate);
-    } catch (error) {
-      reject(new Error("Error formatting date: " + error.message));
-    }
-  });
-}
+  // Intentar formatear la fecha en la zona horaria del servidor en formato ISO
+  try {
+    return formatInTimeZone(
+      baseDate,
+      timeZone,
+      "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+      { timeZone: 'UTC' }
+    );
+  } catch (error) {
+    throw new Error("Error formatting date: " + error.message);
+  }
+};
 
-module.exports = convertTimeZone;
+/**
+ * Convierte una fecha completa a la zona horaria especificada.
+ * @param {string} timeZone - Zona horaria de destino en formato IANA.
+ * @param {Date} date - Fecha a convertir.
+ * @returns {string} - La fecha convertida en formato ISO.
+ */
+const convertDateToZone = (timeZone, date = new Date()) => {
+  // Validar que la fecha sea válida
+  if (!(date instanceof Date) || isNaN(date.valueOf())) {
+    throw new Error("Invalid date.");
+  }
+
+  try {
+    return formatInTimeZone(
+      date,
+      timeZone,
+      "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+      { timeZone: 'UTC' }
+    );
+  } catch (error) {
+    throw new Error("Error formatting date: " + error.message);
+  }
+};
+
+// Exportar ambas funciones dentro de un objeto para poder expandir en el futuro
+module.exports = {
+  convertTimeAtZone,
+  convertDateToZone
+};
