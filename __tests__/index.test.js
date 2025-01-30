@@ -6,7 +6,7 @@ test('converts time from Montevideo to UTC', () => {
     time: '15:00',
     baseDate: new Date('2024-09-12T12:00:00.000Z')
   });
-  expect(result).toBe('2024-09-12T12:00:00.000Z');
+  expect(result).toBe('2024-09-12T18:00:00.000Z');
 });
 
 test('converts date to Montevideo timezone', () => {

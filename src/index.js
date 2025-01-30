@@ -1,4 +1,5 @@
 const { formatInTimeZone } = require('date-fns-tz');
+const { format } = require('date-fns');
 
 /**
  * Convierte la hora de una zona horaria a otra o a UTC si no se especifica la zona horaria de destino.
@@ -23,19 +24,13 @@ const convertTimeAtZone = ({ timeZone, time, baseDate = new Date() }) => {
 
   // Asumir que baseDate es ahora válido y proceder
   const [hours, minutes] = time.split(':');
-  baseDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+  baseDate.setHours(parseInt(hours));
+  baseDate.setMinutes(parseInt(minutes));
+  baseDate = new Date(
+    format(baseDate, "yyyy-MM-dd'T'HH:mm:ss").concat(formatInTimeZone(baseDate, timeZone, "XXX"))
+  );
 
-  // Intentar formatear la fecha en la zona horaria del servidor en formato ISO
-  try {
-    return formatInTimeZone(
-      baseDate,
-      timeZone,
-      "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-      { timeZone: 'UTC' }
-    );
-  } catch (error) {
-    throw new Error("Error formatting date: " + error.message);
-  }
+  return baseDate.toISOString();
 };
 
 /**
